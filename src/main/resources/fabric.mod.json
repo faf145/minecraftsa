@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "topkaautocommands",
+  "version": "2.0.0",
+  "name": "TopkaAutoCommands",
+  "description": "FreeCam + AutoCommands для Minecraft 1.21.4",
+  "authors": ["TopkaProduct", "funtrue"],
+  "contact": {},
+  "license": "All Rights Reserved",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.dezc.betterfps.TopkaMod"
+    ]
+  },
+  "mixins": [
+    "topkaautocommands.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "minecraft": "~1.21.4",
+    "java": ">=21"
+  }
+}

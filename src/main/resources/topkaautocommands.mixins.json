@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.dezc.betterfps.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MixinCamera",
+    "MixinClientPlayer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
