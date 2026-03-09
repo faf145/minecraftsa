@@ -1,5 +1,10 @@
 {
-  "key.topka.freecam": "Toggle FreeCam",
-  "key.topka.open_gui": "Open AutoCommands GUI",
+  "key.topka.freecam": "FreeCam (вкл/выкл)",
+  "key.topka.showinvis_on": "ShowInvis (включить)",
+  "key.topka.showinvis_off": "ShowInvis (выключить)",
+  "key.topka.hitbox_up": "Хитбоксы (увеличить)",
+  "key.topka.hitbox_down": "Хитбоксы (уменьшить)",
+  "key.topka.hitbox_reset": "Хитбоксы (сброс)",
+  "key.topka.open_gui": "AutoCommands GUI",
   "key.categories.topka": "TopkaAutoCommands"
 }

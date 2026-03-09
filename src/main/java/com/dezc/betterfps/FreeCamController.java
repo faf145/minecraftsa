@@ -1,14 +1,13 @@
 package com.dezc.betterfps;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.math.Vec3d;
 
 public class FreeCamController {
 
     public static boolean active = false;
     public static double x, y, z;
     public static float yRot, xRot;
-    private static float speed = 0.3f;
+    public static float speed = 0.1f;
 
     public static void toggle() {
         MinecraftClient mc = MinecraftClient.getInstance();
@@ -17,10 +16,9 @@ public class FreeCamController {
         active = !active;
 
         if (active) {
-            Vec3d pos = mc.player.getPos();
-            x = pos.x;
-            y = pos.y + mc.player.getEyeHeight(mc.player.getPose());
-            z = pos.z;
+            x = mc.player.getX();
+            y = mc.player.getY() + mc.player.getEyeHeight(mc.player.getPose());
+            z = mc.player.getZ();
             yRot = mc.player.getYaw();
             xRot = mc.player.getPitch();
         }
@@ -30,17 +28,18 @@ public class FreeCamController {
         return active;
     }
 
-    public static void move(double dx, double dy, double dz) {
-        x += dx * speed;
-        y += dy * speed;
-        z += dz * speed;
-    }
+    public static void moveCamera(float forward, float strafe, boolean up, boolean down) {
+        double yawRad = Math.toRadians(yRot);
+        double pitchRad = Math.toRadians(xRot);
 
-    public static float getSpeed() {
-        return speed;
-    }
+        x += -Math.sin(yawRad) * Math.cos(pitchRad) * forward * speed;
+        y += -Math.sin(pitchRad) * forward * speed;
+        z += Math.cos(yawRad) * Math.cos(pitchRad) * forward * speed;
 
-    public static void setSpeed(float s) {
-        speed = s;
+        x += Math.cos(yawRad) * strafe * speed;
+        z += Math.sin(yawRad) * strafe * speed;
+
+        if (up) y += speed;
+        if (down) y -= speed;
     }
 }
