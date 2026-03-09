@@ -4,20 +4,17 @@ import net.minecraft.client.MinecraftClient;
 import java.util.concurrent.*;
 
 public class AutoCommandsManager {
-    public static CommandEntry[] commands = new CommandEntry[5];
-    private static ScheduledExecutorService[] schedulers = new ScheduledExecutorService[5];
+    public static final int COUNT = 5;
+    public static CommandEntry[] commands = new CommandEntry[COUNT];
+    private static ScheduledExecutorService[] schedulers = new ScheduledExecutorService[COUNT];
 
     public static void init() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < COUNT; i++) {
             commands[i] = new CommandEntry(false, "", 5);
             schedulers[i] = Executors.newSingleThreadScheduledExecutor();
         }
         ConfigManager.load();
-        startAll();
-    }
-
-    public static void startAll() {
-        for (int i = 0; i < 5; i++) startScheduler(i);
+        for (int i = 0; i < COUNT; i++) startScheduler(i);
     }
 
     public static void restartScheduler(int i) {
@@ -40,6 +37,6 @@ public class AutoCommandsManager {
         public boolean enabled;
         public String command;
         public int delay;
-        public CommandEntry(boolean e, String c, int d) { enabled=e; command=c; delay=d; }
+        public CommandEntry(boolean e, String c, int d) { enabled = e; command = c; delay = d; }
     }
 }

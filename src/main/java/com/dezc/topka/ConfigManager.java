@@ -6,17 +6,18 @@ import java.io.*;
 import java.nio.file.*;
 
 public class ConfigManager {
-    private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("topka_autocommands.json");
+    private static final Path PATH =
+        FabricLoader.getInstance().getConfigDir().resolve("topka_autocommands.json");
 
     public static void load() {
         if (!Files.exists(PATH)) return;
-        try {
-            JsonArray arr = JsonParser.parseReader(new FileReader(PATH.toFile())).getAsJsonArray();
-            for (int i = 0; i < Math.min(arr.size(), 5); i++) {
+        try (FileReader r = new FileReader(PATH.toFile())) {
+            JsonArray arr = JsonParser.parseReader(r).getAsJsonArray();
+            for (int i = 0; i < Math.min(arr.size(), AutoCommandsManager.COUNT); i++) {
                 JsonObject o = arr.get(i).getAsJsonObject();
                 AutoCommandsManager.commands[i].enabled = o.get("enabled").getAsBoolean();
                 AutoCommandsManager.commands[i].command = o.get("command").getAsString();
-                AutoCommandsManager.commands[i].delay = o.get("delay").getAsInt();
+                AutoCommandsManager.commands[i].delay   = o.get("delay").getAsInt();
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
@@ -28,7 +29,7 @@ public class ConfigManager {
                 JsonObject o = new JsonObject();
                 o.addProperty("enabled", cmd.enabled);
                 o.addProperty("command", cmd.command);
-                o.addProperty("delay", cmd.delay);
+                o.addProperty("delay",   cmd.delay);
                 arr.add(o);
             }
             try (FileWriter w = new FileWriter(PATH.toFile())) {

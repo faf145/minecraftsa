@@ -9,43 +9,49 @@ import org.lwjgl.glfw.GLFW;
 
 public class TopkaMod implements ClientModInitializer {
 
-    public static KeyBinding freecamKey;
-    public static KeyBinding showInvisOnKey;
-    public static KeyBinding showInvisOffKey;
-    public static KeyBinding hitboxUpKey;
-    public static KeyBinding hitboxDownKey;
-    public static KeyBinding hitboxResetKey;
-    public static KeyBinding openGuiKey;
+    // Numpad Enter - freecam toggle
+    public static KeyBinding toggleFreeCam;
+    // Numpad 4 - ShowInvis ON
+    public static KeyBinding showInvisOn;
+    // Numpad 5 - ShowInvis OFF
+    public static KeyBinding showInvisOff;
+    // Numpad 7 - Hitbox увеличить
+    public static KeyBinding hitboxUp;
+    // Numpad 8 - Hitbox уменьшить
+    public static KeyBinding hitboxDown;
+    // Numpad 9 - Hitbox сброс (дефолт)
+    public static KeyBinding hitboxReset;
+    // Right Shift - AutoCommands GUI
+    public static KeyBinding openGui;
 
     @Override
     public void onInitializeClient() {
-        freecamKey = reg("key.topka.freecam", GLFW.GLFW_KEY_KP_ENTER);
-        showInvisOnKey = reg("key.topka.showinvis_on", GLFW.GLFW_KEY_KP_4);
-        showInvisOffKey = reg("key.topka.showinvis_off", GLFW.GLFW_KEY_KP_5);
-        hitboxUpKey = reg("key.topka.hitbox_up", GLFW.GLFW_KEY_KP_7);
-        hitboxDownKey = reg("key.topka.hitbox_down", GLFW.GLFW_KEY_KP_8);
-        hitboxResetKey = reg("key.topka.hitbox_reset", GLFW.GLFW_KEY_KP_9);
-        openGuiKey = reg("key.topka.open_gui", GLFW.GLFW_KEY_RIGHT_SHIFT);
+        toggleFreeCam = reg("key.topka.freecam",     GLFW.GLFW_KEY_KP_ENTER);
+        showInvisOn    = reg("key.topka.showinvis_on",  GLFW.GLFW_KEY_KP_4);
+        showInvisOff   = reg("key.topka.showinvis_off", GLFW.GLFW_KEY_KP_5);
+        hitboxUp       = reg("key.topka.hitbox_up",     GLFW.GLFW_KEY_KP_7);
+        hitboxDown     = reg("key.topka.hitbox_down",   GLFW.GLFW_KEY_KP_8);
+        hitboxReset    = reg("key.topka.hitbox_reset",  GLFW.GLFW_KEY_KP_9);
+        openGui        = reg("key.topka.open_gui",      GLFW.GLFW_KEY_RIGHT_SHIFT);
 
         AutoCommandsManager.init();
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (freecamKey.wasPressed()) FreeCam.toggle();
-            while (showInvisOnKey.wasPressed()) ShowInvis.setActive(true);
-            while (showInvisOffKey.wasPressed()) ShowInvis.setActive(false);
-            while (hitboxUpKey.wasPressed()) Hitboxes.scaleUp();
-            while (hitboxDownKey.wasPressed()) Hitboxes.scaleDown();
-            while (hitboxResetKey.wasPressed()) Hitboxes.reset();
-            while (openGuiKey.wasPressed()) {
-                if (client.player != null)
-                    client.setScreen(new AutoCommandsScreen());
+        ClientTickEvents.END_CLIENT_TICK.register(mc -> {
+            while (toggleFreeCam.wasPressed()) FreeCamController.toggle();
+            while (showInvisOn.wasPressed())   ShowInvisController.setActive(true);
+            while (showInvisOff.wasPressed())  ShowInvisController.setActive(false);
+            while (hitboxUp.wasPressed())      HitboxController.increase();
+            while (hitboxDown.wasPressed())    HitboxController.decrease();
+            while (hitboxReset.wasPressed())   HitboxController.reset();
+            while (openGui.wasPressed()) {
+                if (mc.player != null) mc.setScreen(new AutoCommandsScreen());
             }
         });
     }
 
-    private KeyBinding reg(String id, int key) {
+    private KeyBinding reg(String id, int glfw) {
         return KeyBindingHelper.registerKeyBinding(
-            new KeyBinding(id, InputUtil.Type.KEYSYM, key, "key.categories.topka")
+            new KeyBinding(id, InputUtil.Type.KEYSYM, glfw, "key.categories.topka")
         );
     }
 }

@@ -1,6 +1,6 @@
 package com.dezc.topka.mixins;
 
-import com.dezc.topka.ShowInvis;
+import com.dezc.topka.ShowInvisController;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.entity.Entity;
@@ -11,9 +11,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRenderer.class)
 public class MixinEntityRenderer {
+
     @Inject(method = "shouldRender", at = @At("RETURN"), cancellable = true)
-    private <E extends Entity> void onShouldRender(E entity, Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
-        if (ShowInvis.isActive() && entity.isInvisible()) {
+    private <E extends Entity> void onShouldRender(E entity, Frustum frustum,
+            double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
+        if (ShowInvisController.isActive() && entity.isInvisible()) {
             cir.setReturnValue(true);
         }
     }
