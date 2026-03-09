@@ -1,6 +1,7 @@
-package com.dezc.betterfps.mixins;
+package com.dezc.topka.mixins;
 
-import com.dezc.betterfps.ShowInvisController;
+import com.dezc.topka.ShowInvis;
+import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,10 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRenderer.class)
 public class MixinEntityRenderer {
-
     @Inject(method = "shouldRender", at = @At("RETURN"), cancellable = true)
-    private void onShouldRender(Entity entity, net.minecraft.client.frustum.Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
-        if (ShowInvisController.isActive() && entity.isInvisible()) {
+    private <E extends Entity> void onShouldRender(E entity, Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
+        if (ShowInvis.isActive() && entity.isInvisible()) {
             cir.setReturnValue(true);
         }
     }

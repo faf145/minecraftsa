@@ -3,19 +3,13 @@
   "id": "topkaautocommands",
   "version": "2.0.0",
   "name": "TopkaAutoCommands",
-  "description": "FreeCam + AutoCommands для Minecraft 1.21.4",
+  "description": "FreeCam + ShowInvis + Hitboxes + AutoCommands",
   "authors": ["TopkaProduct", "funtrue"],
-  "contact": {},
-  "license": "All Rights Reserved",
   "environment": "client",
   "entrypoints": {
-    "client": [
-      "com.dezc.betterfps.TopkaMod"
-    ]
+    "client": ["com.dezc.topka.TopkaMod"]
   },
-  "mixins": [
-    "topkaautocommands.mixins.json"
-  ],
+  "mixins": ["topkaautocommands.mixins.json"],
   "depends": {
     "fabricloader": ">=0.15.0",
     "fabric-api": "*",

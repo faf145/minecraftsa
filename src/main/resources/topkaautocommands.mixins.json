@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.dezc.betterfps.mixins",
+  "package": "com.dezc.topka.mixins",
   "compatibilityLevel": "JAVA_21",
   "client": [
     "MixinCamera",
@@ -9,7 +9,5 @@
     "MixinEntityRenderer",
     "MixinGameRenderer"
   ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+  "injectors": { "defaultRequire": 1 }
 }

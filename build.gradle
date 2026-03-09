@@ -4,7 +4,7 @@ plugins {
 }
 
 version = '2.0.0'
-group = 'com.dezc.betterfps'
+group = 'com.dezc.topka'
 base.archivesName = 'TopkaAutoCommands'
 
 repositories {
@@ -25,6 +25,4 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-jar {
-    from('LICENSE')
-}
+jar { from('LICENSE') }
